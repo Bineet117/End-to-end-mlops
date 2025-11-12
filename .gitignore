@@ -1,2 +1,3 @@
 venv/
 data/Amravati_merged.csv/
+.env

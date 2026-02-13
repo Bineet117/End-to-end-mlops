@@ -1,0 +1,6 @@
+
+PyYAML
+
+
+# GCP
+google-cloud-storage

@@ -1,0 +1,13 @@
+drift:
+  reference_data_path: data/processed/processed_data.pkl
+  threshold: 0.05
+  features_to_monitor:
+    - income_annum
+    - loan_amount
+    - cibil_score
+    - loan_term
+    - total_asset_value
+
+alerts:
+  enabled: true
+  retrain_on_drift: false

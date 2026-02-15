@@ -2,7 +2,11 @@
 PyYAML
 pandas
 numpy
-
-
-# GCP
+scikit-learn
 google-cloud-storage
+joblib
+mlflow
+fastapi
+uvicorn
+pytest
+evidently

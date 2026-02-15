@@ -1,0 +1,10 @@
+serving:
+  host: 0.0.0.0
+  port: 8000
+  model_path: models/model.pkl
+  scaler_path: models/scaler.pkl
+  encoders_path: models/label_encoders.pkl
+
+gcs:
+  model_bucket: loan_pred_e2e
+  model_path: models/loan_model.pkl

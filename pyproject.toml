@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "end-to-end-mlops"
+version = "0.1.0"
+description = "End-to-end MLOps pipeline for loan prediction"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Bineet" },
+]
+
+dependencies = [
+    "PyYAML",
+    "pandas",
+    "numpy",
+    "scikit-learn",
+    "google-cloud-storage",
+    "mlflow",
+    "fastapi",
+    "uvicorn",
+    "pytest"
+]
+
+[tool.setuptools.packages.find]
+include = ["src*", "loggings*"]
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

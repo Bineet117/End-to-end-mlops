@@ -4,40 +4,46 @@ from loggings.logger import get_logger
 import os
 import sys
 
+import pandas as pd
+
 module_name = sys.modules[__name__].__spec__.name if __spec__ else __name__
 logger = get_logger(module_name)
 
+class DataIngestion:
+    def __init__(self):
+        self.configloader = ConfigLoader()
 
-configloader = ConfigLoader()
+    def fetch_downloaded_data(self, destination_file_name):
+        try:
+            raw_data = pd.read_csv(destination_file_name)
+            return raw_data
+        except Exception as e:
+            logger.warning(f"{e}")
 
-def download_blob(bucket_name, source_blob_name, destination_file_name):
-    """Downloads a blob from the bucket."""
-    storage_client = storage.Client()
-    bucket = storage_client.bucket(bucket_name)
+    def download_blob(self, name):
+        configs = self.configloader.load(name)
 
-    # Construct a blob (an object)
-    blob = bucket.blob(source_blob_name)
-    
-    print(f"Downloading {source_blob_name} to {destination_file_name}...")
+        bucket_name = configs.get("gcs", {}).get("bucket_name")
+        source_blob_name = configs.get("gcs", {}).get("gcs_raw_file_path")
+        destination_file_name = "data/raw/raw_data.csv"
 
-    # Download blob to local file
-    blob.download_to_filename(destination_file_name)
+        """Downloads a blob from the bucket."""
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(bucket_name)
 
-    print(f"Blob {source_blob_name} downloaded to {destination_file_name}.")
+        # Construct a blob (an object)
+        blob = bucket.blob(source_blob_name)
+
+        # Download blob to local file
+        blob.download_to_filename(destination_file_name)
+
+        df = self.fetch_downloaded_data(destination_file_name)
+        print(df.head())
+        return df 
 
 
-configs = configloader.load("gcp")
 
-# Replace these with your actual values
-logger.info("import about to start everthing")
-MY_BUCKET = configs.get("gcs", {}).get("bucket_name")
-GCS_FILE_PATH = configs.get("gcs", {}).get("gcs_raw_file_path")
-LOCAL_PATH = "data/raw/raw_data.csv"
-logger.info("imported everthing")
-
-try:
-    download_blob(MY_BUCKET, GCS_FILE_PATH, LOCAL_PATH)
-except Exception as e:
-    print(f"An error occurred: {e}")
+# ingestion = DataIngestion()
+# ingestion.download_blob("gcp")
 
 

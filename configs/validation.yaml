@@ -1,0 +1,19 @@
+data_details:
+  num_of_columns: 13
+  target: loan_status
+
+  numerical:
+    - loan_id
+    - no_of_dependents
+    - income_annum
+    - loan_amount
+    - loan_term
+    - cibil_score
+    - residential_assets_value
+    - commercial_assets_value
+    - luxury_assets_value
+    - bank_asset_value
+
+  categorical:
+    - education
+    - self_employed
